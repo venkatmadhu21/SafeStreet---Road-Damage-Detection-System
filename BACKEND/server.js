@@ -411,8 +411,19 @@ app.post("/predict", upload.single("image"), async (req, res) => { // Handles im
       const lastLine = outputLines[outputLines.length - 1];
       const result = lastLine.split(' ')[0]; // Gets just "Road" or "Not a Road"
       
+      // Extract confidence score
+      let confidence = 0;
+      const confidenceLine = outputLines.find(line => line.includes('confidence:'));
+      if (confidenceLine) {
+        const match = confidenceLine.match(/confidence:\s*([\d\.]+)/);
+        if (match && match[1]) {
+          confidence = parseFloat(match[1]);
+        }
+      }
+      
       console.log("Python prediction output:", predictionResult.trim());
       console.log("Extracted result:", result);
+      console.log("Extracted confidence:", confidence);
       
       if (code !== 0) {
         return res.status(500).json({ error: "Prediction process failed" });
@@ -484,6 +495,7 @@ app.post("/predict", upload.single("image"), async (req, res) => { // Handles im
 
       res.status(200).json({ 
         prediction: result,
+        confidence: confidence,
         saved: savedImagePath !== null
       });
     });

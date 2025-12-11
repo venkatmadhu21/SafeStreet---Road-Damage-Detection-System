@@ -434,7 +434,7 @@ const Report = () => {
             // Add the logo multiple times as a pattern across the page with slightly increased opacity
             doc.setGState(new doc.GState({ opacity: 0.12 }));
             for (let y = 40; y < 280; y += 100) {
-              for (let x = 20; x < 180; x += 100) {
+              for (let x = 2; x < 180; x += 100) {
                 doc.addImage(logoBase64, 'PNG', x, y, 60, 60);
               }
             }

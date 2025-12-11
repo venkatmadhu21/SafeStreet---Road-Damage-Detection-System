@@ -370,7 +370,7 @@ def run_detection(image_path, location=None):
 
     # Process YOLO detections efficiently
     result = results[0]  # Get the first (and only) result
-    bboxes = []          # Initialize empty list for bounding boxes
+    bboxes = [  ]          # Initialize empty list for bounding boxes
     
     # Process detected boxes if any were found
     if len(result.boxes) > 0:
